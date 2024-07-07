@@ -3,6 +3,8 @@ const cors = require("cors");
 const db = require("./db");
 const rateLimiter = require("./middlewares/rate-limiter");
 const error404Handler = require("./middlewares/error-404-handler");
+const errorHandler = require("./middlewares/error-handler");
+const { loadSystemUser } = require("./loadSystemDefaults");
 
 /*
 |-----------------------------------------------|
@@ -21,11 +23,6 @@ const initializeMiddlewares = (app) => {
    * Use RateLimiter Middleware
    */
   app.use(rateLimiter);
-
-  /**
-   * Use Error404 Middleware
-   */
-  app.use(error404Handler);
 };
 
 /*
@@ -45,6 +42,7 @@ module.exports.bootstrap = async () => {
   |-----------------------------------------------|
  */
   await db.init();
+  await loadSystemUser();
 
   /*
   |-----------------------------------------------|
@@ -59,6 +57,16 @@ module.exports.bootstrap = async () => {
   |-----------------------------------------------|
   */
   initializeAppRoutes(app);
+
+  /**
+   * Use Error404 Middleware
+   */
+  app.use(error404Handler);
+
+  /**
+   * Use Error Middleware
+   */
+  app.use(errorHandler);
 
   // set port, listen for requests
   const PORT = process.env.PORT || 8080;

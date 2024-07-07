@@ -4,10 +4,21 @@ const InvoiceService = require("./invoice.service");
 class InvoiceController extends EntityController {
   constructor() {
     super("invoice");
-    this.loadRoutes();
   }
 
-  loadRoutes() {}
+  loadDefaultRoutes() {
+    this.router.post(
+      `/${this.entityName}/generate/current-month`,
+      this.asyncHandler(this.generateInvoicesForCurrentMonth.bind(this))
+    );
+  }
+
+  async generateInvoicesForCurrentMonth(req, res, next) {
+    await InvoiceService.generateInvoicesForCurrentMonth({});
+    res.json({
+      message: "Invoice generated successfully for current month",
+    });
+  }
 
   // async fetchAllEntities(req, res) {
   //   const data = await InvoiceService.fetchAllEntities(req, {});

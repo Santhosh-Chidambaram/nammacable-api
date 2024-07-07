@@ -8,32 +8,38 @@ class UserService {
     });
   }
 
-  static async fetchAllEntities(reqContext, {}) {
+  static async fetchAllEntities({ reqParams, reqQuery, reqBody }) {
     return UserModel.find({});
   }
 
-  static async fetchEntityById(reqContext, {}) {
+  static async fetchEntityById({ reqParams, reqQuery, reqBody }) {
     return UserModel.findById({});
   }
 
-  static async createEntity(reqContext, { body }) {
-    return UserModel.create(body);
+  static async createEntity({ reqParams, reqQuery, reqBody }) {
+    return UserModel.create(reqBody);
   }
 
-  static async updateEntityById(reqContext, {}) {
+  static async updateEntityById({ reqParams, reqQuery, reqBody }) {
     return UserModel.updateOne({});
   }
 
-  static async deleteEntityById(reqContext, {}) {
+  static async deleteEntityById({ reqParams, reqQuery, reqBody }) {
     return UserModel.deleteOne({});
   }
 
-  static async authenticate(reqContext, { body }) {
-    const { username, password } = body;
+  static async authenticateUser({ reqParams, reqQuery, reqBody }) {
+    const { username, password } = reqBody;
 
-    let user = await UserModel.findOne({
-      username,
-    });
+    let user = await UserModel.findOne(
+      {
+        username,
+      },
+      {
+        username: 1,
+        userType: 1,
+      }
+    );
 
     if (!user) throw new Error("User does not exists");
 
@@ -43,6 +49,7 @@ class UserService {
 
     user.token = this.generateAuthToken({
       userId: user._id,
+      userType: user.userType,
     });
 
     return user;

@@ -9,42 +9,58 @@ class CustomerController extends EntityController {
 
   loadRoutes() {}
 
-  // async fetchAllEntities(req, res) {
-  //   const data = await CustomerService.fetchAllEntities(req, {});
-  //   res.json({
-  //     data,
-  //   });
-  // }
+  async fetchAllEntities(req, res) {
+    const data = await CustomerService.fetchAllEntities({
+      reqParams: req.params,
+      reqQuery: req.query,
+    });
+    res.json({
+      data,
+      message: "Customers fetched successfully!",
+    });
+  }
 
-  // async fetchEntityById(req, res) {
-  //   const data = await CustomerService.fetchEntityById(req, {});
-  //   res.json({
-  //     data,
-  //   });
-  // }
+  async fetchEntityById(req, res) {
+    const data = await CustomerService.fetchEntityById({
+      reqParams: req.params,
+      reqQuery: req.query,
+    });
+    res.json({
+      data: data,
+      message: "Customer fetched successfully!",
+    });
+  }
 
-  // async createEntity(req, res) {
-  //   const data = await CustomerService.createEntity(req, { body: req.body });
-  //   res.json({
-  //     data,
-  //   });
-  // }
+  async createEntity(req, res) {
+    const data = await CustomerService.createEntity({ reqBody: req.body });
+    res.json({
+      data,
+      message: "Customer created successfully!",
+    });
+  }
 
-  // async updateEntityById(req, res) {
-  //   const data = await CustomerService.updateEntityById(req, {
-  //     body: req.body,
-  //   });
-  //   res.json({
-  //     data,
-  //   });
-  // }
+  async updateEntityById(req, res) {
+    const data = await CustomerService.updateEntityById({
+      reqParams: req.params,
+      reqQuery: req.query,
+      reqBody: req.body,
+    });
+    res.json({
+      data,
+      message: "Customer updated successfully!",
+    });
+  }
 
-  // async deleteEntityById(req, res) {
-  //   const data = await CustomerService.deleteEntityById(req, {});
-  //   res.json({
-  //     data,
-  //   });
-  // }
+  async deleteEntityById(req, res) {
+    const data = await CustomerService.deleteEntityById({
+      reqParams: req.params,
+      reqQuery: req.query,
+    });
+    res.json({
+      data,
+      message: "Customer deleted successfully!",
+    });
+  }
 }
 
 module.exports = CustomerController;

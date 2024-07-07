@@ -31,6 +31,10 @@ const schema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "customer",
     },
+    lcoId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
     deleted: {
       type: Boolean,
       default: false,

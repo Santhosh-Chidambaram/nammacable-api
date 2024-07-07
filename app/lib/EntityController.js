@@ -14,7 +14,7 @@ class EntityController {
       this.asyncHandler(this.fetchAllEntities.bind(this))
     );
     this.router.get(
-      `/${this.entityName}/:${this.entityName}Id`,
+      `/${this.entityName}/:id`,
       this.asyncHandler(this.fetchEntityById.bind(this))
     );
     this.router.post(
@@ -22,11 +22,11 @@ class EntityController {
       this.asyncHandler(this.createEntity.bind(this))
     );
     this.router.patch(
-      `/${this.entityName}/:${this.entityName}Id`,
+      `/${this.entityName}/:id`,
       this.asyncHandler(this.updateEntityById.bind(this))
     );
     this.router.delete(
-      `/${this.entityName}/:${this.entityName}Id`,
+      `/${this.entityName}/:id`,
       this.asyncHandler(this.deleteEntityById.bind(this))
     );
   }

@@ -1,24 +1,34 @@
 const CustomerModel = require("./customer.model");
 
 class CustomerService {
-  static async fetchAllEntities(reqContext, {}) {
+  static async fetchAllEntities({ reqParams, reqQuery, reqBody }) {
     return CustomerModel.find({});
   }
 
-  static async fetchEntityById(reqContext, {}) {
-    return CustomerModel.findById({});
+  static async fetchEntityById({ reqParams, reqQuery, reqBody }) {
+    return CustomerModel.findById(reqParams.id);
   }
 
-  static async createEntity(reqContext, { body }) {
-    return CustomerModel.create(body);
+  static async createEntity({ reqParams, reqQuery, reqBody }) {
+    return CustomerModel.create(reqBody);
   }
 
-  static async updateEntityById(reqContext, {}) {
-    return CustomerModel.updateOne({});
+  static async updateEntityById({ reqParams, reqQuery, reqBody }) {
+    return CustomerModel.findByIdAndUpdate(reqParams.id, reqBody, {
+      new: true,
+    });
   }
 
-  static async deleteEntityById(reqContext, {}) {
-    return CustomerModel.deleteOne({});
+  static async deleteEntityById({ reqParams, reqQuery, reqBody }) {
+    return CustomerModel.findByIdAndUpdate(
+      reqParams.id,
+      {
+        deleted: true,
+      },
+      {
+        new: true,
+      }
+    );
   }
 }
 
